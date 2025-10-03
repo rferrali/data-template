@@ -1,0 +1,1 @@
+ssc install coefplot, replace

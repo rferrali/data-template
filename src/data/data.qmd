@@ -1,0 +1,43 @@
+---
+title: "Data"
+date: "`r Sys.Date()`"
+editor: 
+    render-on-save: false
+---
+
+```{r}
+#| label: setup
+
+# load packages
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(modelsummary))
+library(dotenv)
+```
+
+```{r}
+#| label: data generation
+
+df <- tibble(
+    x1 = rnorm(250),
+    x2 = rnorm(250)
+)
+df$y <- df$x1 - 2 * df$x2 + rnorm(nrow(df))
+```
+
+```{r}
+#| label: reporting
+#| tbl-cap: Data summary
+
+datasummary_skim(
+    df, 
+    fun_numeric = list(
+        Mean = Mean, 
+        SD = SD
+    )
+)
+```
+
+```{r}
+#| label: saving output
+write_csv(df, "./data/data.csv")
+```
