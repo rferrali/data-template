@@ -14,7 +14,7 @@ suppressPackageStartupMessages(library(modelsummary))
 
 # read data
 source("./src/lib/io.R")
-df <- read_csv("./data/raw/student_exam_scores.csv")
+df <- read_csv("./data/raw/data.csv")
 ```
 
 ```{r}
@@ -25,6 +25,8 @@ df <- df |> mutate(
   previous_scores = previous_scores / 100,
   exam_score = exam_score / 100
 )
+
+write_csv(df, "./data/processed/data.csv")
 ```
 
 ```{r}
@@ -36,6 +38,7 @@ datasummary_skim(
   fun_numeric = list(
     Mean = Mean,
     SD = SD
-  )
+  ),
+  escape = FALSE
 )
 ```

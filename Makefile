@@ -97,14 +97,18 @@ endef
 # Clean up intermediate files
 clean:
 	@echo "🧹 $(GREEN_START)Cleaning up...$(GREEN_END)"
-	@find ./tex -type f \( -name '*.aux' -o -name '*.bbl' -o -name '*.blg' -o -name '*.fdb_latexmk' -o -name '*.fls' -o -name '*.log' -o -name '*.out' -o -name '*.synctex.gz' \) -delete
+	@find ./tex -type f ! -name '*.tex' -delete
 	@echo "✅ $(GREEN_START)Done!$(GREEN_END)"
 
 # Delete all targets
 fresh: 
-	@echo "😵 $(GREEN_START)Deleting all targets...$(GREEN_END)"
+	@echo "😵 $(GREEN_START)Deleting all targets and intermediary files...$(GREEN_END)"
 	@find ./bin -type f -name "*.pdf" -delete
 	@find ./bin -type f -name "*.log" -delete
+	@find ./bin -type f -name "*.log" -delete
+	@find ./assets/tables -type f ! -name ".gitignore" -delete
+	@find ./assets/figures -type f ! -name ".gitignore" -delete
+	@find ./data/processed -type f ! -name ".gitignore" -delete
 	@echo "✅ $(GREEN_START)Done!$(GREEN_END)"
 
 # Clear cache of .qmd files
@@ -118,14 +122,9 @@ tests:
 	@echo "🧪 $(GREEN_START)Running tests...$(GREEN_END)"
 	@Rscript -e "testthat::test_dir('tests')"
 
-# Initialize directories
-initialize: 
-	@echo "🛠️ $(GREEN_START)Initializing directories...$(GREEN_END)"
-	@mkdir -p ./assets/tables
-	@mkdir -p ./assets/figures
-	@mkdir -p ./data
-	@mkdir -p ./bin/src
-	@mkdir -p ./bin/tex
+# Create symlinks to assets and library.bib in each LaTeX subdirectory
+symlinks: 
+	@echo "🛠️ $(GREEN_START)Creating symlinks to assets folder and library.bib...$(GREEN_END)"
 	@for dir in ./tex/*/; do \
 		if [ -d "$$dir" ]; then \
 			echo "Creating symlinks in $$dir..."; \

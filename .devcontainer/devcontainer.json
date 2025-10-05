@@ -27,9 +27,9 @@
     // "forwardPorts": [],
     // On container startup, check that packages that guarantee a pleasant R development experience
     //  with vscode are installed
-    "postStartCommand": "Rscript /startup_scripts/check_dev_dependencies.R",
+    "postStartCommand": "/startup_scripts/check_dev_dependencies.R",
     // 👇 Uncomment to install additional latex packages and system dependencies on container creation
-    "postCreateCommand": "Rscript -e 'renv::restore()'",
+    "postCreateCommand": "/startup_scripts/check_dev_dependencies.R && Rscript -e 'renv::restore()'",
     "containerEnv": {
         // 👇 Uncomment to disable the installation of renv packages with pak. 
         // More info: https://rstudio.github.io/renv/reference/config.html#renv-config-pak-enabled

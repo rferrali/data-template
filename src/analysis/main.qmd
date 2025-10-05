@@ -14,7 +14,7 @@ suppressPackageStartupMessages(library(modelsummary))
 source("./src/lib/io.R")
 
 # load data
-df <- read.csv("./data/data.csv")
+df <- read_csv("./data/processed/data.csv")
 ```
 
 ```{r}
@@ -22,8 +22,8 @@ df <- read.csv("./data/data.csv")
 #| tbl-cap: Regression table
 
 models <- list(
-  lm(y ~ x1 + x2, data = df),
-  glm(y ~ x1 + x2, data = df, family = "gaussian")
+  lm(exam_score ~ previous_scores, data = df),
+  lm(exam_score ~ hours_studied + sleep_hours + attendance_percent + previous_scores, data = df)
 )
 ```
 

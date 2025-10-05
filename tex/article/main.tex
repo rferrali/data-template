@@ -74,19 +74,35 @@
 \if\anonymized0
     \maketitle
     %TC:ignore
-    % \begin{abstract}
-        
-    % \end{abstract}
+    \begin{abstract}
+        A terrific paper likely to get you the Nobel prize.
+    \end{abstract}
     %TC:endignore
 \fi
 
 \section{Introduction}
 
+This is a nice paper in the style of \citep{Ferrali}.
+
+\begin{table}[H]
+    \centering
+    \input{./assets/tables/table.tex}
+    \caption{A nice table}
+    \label{tab:nice_table}
+\end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics{./assets/figures/figure.pdf}
+    \caption{A nice figure}
+    \label{fig:nice_figure}
+\end{figure}
+
 % ---- Bibliography ----
 \newpage
 %TC:ignore
-% \bibliographystyle{aer} 
-% \bibliography{library}
+\bibliographystyle{aer}
+\bibliography{library}
 %TC:endignore
 
 \newpage
