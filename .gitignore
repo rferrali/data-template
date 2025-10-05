@@ -5,6 +5,15 @@ stata.lic
 /bin
 /tex/*/*.pdf
 
+#### macOS ####
+
+.DS_Store
+
+#### Windows ####
+
+Thumbs.db
+ehthumbs.db
+
 #### R ####
 
 # History files
