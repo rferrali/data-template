@@ -9,8 +9,6 @@ GREEN_END = \033[0m
 R_LIBS = $(wildcard ./src/lib/*.R)
 R_DATA = $(patsubst ./src/data/%.qmd, ./bin/src/data/%.pdf, $(wildcard ./src/data/*.qmd))
 R_ANALYSIS = $(patsubst ./src/analysis/%.qmd, ./bin/src/analysis/%.pdf, $(wildcard ./src/analysis/*.qmd))
-STATA_DATA = $(patsubst ./src/data/%.do, ./bin/src/data/%.log, $(wildcard ./src/data/*.do))
-STATA_ANALYSIS = $(patsubst ./src/analysis/%.do, ./bin/src/analysis/%.log, $(wildcard ./src/analysis/*.do))
 
 # LaTex targets
 PDF_FILES = $(patsubst ./tex/%,./bin/tex/%.pdf,$(wildcard ./tex/*)) 
@@ -52,20 +50,6 @@ define build_qmd
 	@echo "✅ $(GREEN_START)Done!$(GREEN_END)"
 endef
 
-# build_do
-# ----------
-# Executes a Stata .do file and moves the resulting .log file to the bin directory
-# Arguments:
-#   $1 - Path to the .do file (e.g., src/data/data.do -> bin/src/data/data.log)
-define build_do
-	$(eval TARGET := $(patsubst %.do,bin/%.log,$(1)))
-	@echo "📄 $(GREEN_START)Running $(1) -> $(TARGET)...$(GREEN_END)"
-	@stata-mp -b do $(1)
-	@mkdir -p $(dir $(TARGET))
-	@mv $(notdir $(TARGET)) $(TARGET)
-	@echo "✅ $(GREEN_START)Done!$(GREEN_END)"
-endef
-
 define build_R
 	@echo "📄 $(GREEN_START)Running $(1)...$(GREEN_END)"
 	@Rscript $(1)
@@ -77,21 +61,13 @@ endef
 	@echo "🗄️ $(GREEN_START)Data processing$(GREEN_END)"
 	@$(call build_qmd,$<)
 
-# ./bin/src/data/%.log: ./src/data/%.do
-# 	@echo "🗄️ $(GREEN_START)Data processing$(GREEN_END)"
-# 	@$(call build_stata,$<)
-
 # ---- Step 2: Analysis ----
 ./bin/src/analysis/%.pdf: ./src/analysis/%.qmd $(R_DATA) $(R_LIBS)
 	@echo "📊 $(GREEN_START)Running analysis$(GREEN_END)"
 	@$(call build_qmd,$<)
 
-# ./bin/src/analysis/%.log: ./src/analysis/%.do $(STATA_DATA) $(R_LIBS)
-# 	@echo "📊 $(GREEN_START)Running analysis$(GREEN_END)"
-# 	@$(call build_qmd,$<)
-
 # ---- Step 3: Paper ----
-./bin/tex/%.pdf: ./tex/%/main.tex $(R_ANALYSIS) # $(STATA_ANALYSIS)
+./bin/tex/%.pdf: ./tex/%/main.tex $(R_ANALYSIS)
 	@$(call build_tex,$<)
 
 # Clean up intermediate files
