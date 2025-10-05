@@ -11,17 +11,20 @@ editor:
 # load packages
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(modelsummary))
-library(dotenv)
+
+# read data
+source("./src/lib/io.R")
+df <- read_csv("./data/raw/student_exam_scores.csv")
 ```
 
 ```{r}
-#| label: data generation
+#| label: data cleaning
 
-df <- tibble(
-    x1 = rnorm(250),
-    x2 = rnorm(250)
+df <- df |> mutate(
+  attendance_percent = attendance_percent / 100,
+  previous_scores = previous_scores / 100,
+  exam_score = exam_score / 100
 )
-df$y <- df$x1 - 2 * df$x2 + rnorm(nrow(df))
 ```
 
 ```{r}
@@ -29,15 +32,10 @@ df$y <- df$x1 - 2 * df$x2 + rnorm(nrow(df))
 #| tbl-cap: Data summary
 
 datasummary_skim(
-    df, 
-    fun_numeric = list(
-        Mean = Mean, 
-        SD = SD
-    )
+  df,
+  fun_numeric = list(
+    Mean = Mean,
+    SD = SD
+  )
 )
-```
-
-```{r}
-#| label: saving output
-write_csv(df, "./data/data.csv")
 ```

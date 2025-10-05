@@ -9,7 +9,6 @@ date: "`r Sys.Date()`"
 # load packages
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(modelsummary))
-library(dotenv)
 
 # load functions
 source("./src/lib/io.R")
@@ -23,8 +22,8 @@ df <- read.csv("./data/data.csv")
 #| tbl-cap: Regression table
 
 models <- list(
-    lm(y ~ x1 + x2, data = df),
-    glm(y ~ x1 + x2, data = df, family = "gaussian")
+  lm(y ~ x1 + x2, data = df),
+  glm(y ~ x1 + x2, data = df, family = "gaussian")
 )
 ```
 

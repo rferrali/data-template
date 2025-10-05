@@ -1,11 +1,8 @@
 #### Environment ####
 
 .env
-/data
+stata.lic
 /bin
-/tex/*/assets
-!/tex/*/static/*
-.devcontainer/devcontainer.json
 
 #### R ####
 
