@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/rferrali/academic-docker:4.5.1
+      options: --user root
     
     steps:
     - name: Checkout repository
