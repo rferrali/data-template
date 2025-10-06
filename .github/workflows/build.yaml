@@ -1,0 +1,31 @@
+name: Build Project
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/rferrali/academic-docker:4.5.1
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Restore R dependencies
+      run: Rscript -e 'renv::restore()'
+      
+    - name: Run make all
+      run: make all
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: build-outputs
+        path: bin/
+        retention-days: 30
