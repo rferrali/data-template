@@ -19,6 +19,9 @@ jobs:
       
     - name: Restore R dependencies
       run: Rscript -e 'renv::restore()'
+
+    - name: Run make tests
+      run: make tests
       
     - name: Run make all
       run: make all
