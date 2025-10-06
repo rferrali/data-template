@@ -27,7 +27,7 @@
     // "forwardPorts": [],
     // On container startup, check that packages that guarantee a pleasant R development experience
     //  with vscode are installed
-    "postStartCommand": "/startup_scripts/check_dev_dependencies.R",
+    // "postStartCommand": "/startup_scripts/check_dev_dependencies.R",
     // 👇 Uncomment to install additional latex packages and system dependencies on container creation
     "postCreateCommand": "/startup_scripts/check_dev_dependencies.R && Rscript -e 'renv::restore()'",
     "containerEnv": {
